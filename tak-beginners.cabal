@@ -1,0 +1,76 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: bbf75de78d7e60fc586f2a3bbd0a0adc0e4fe21d7c5f2559af03f6a77f3c8e07
+
+name:           tak-beginners
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/tak-beginners#readme>
+homepage:       https://github.com/githubuser/tak-beginners#readme
+bug-reports:    https://github.com/githubuser/tak-beginners/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/tak-beginners
+
+library
+  exposed-modules:
+      Homework.W02
+      Homework.W03
+      Homework.W03Other
+      Lib
+  other-modules:
+      Paths_tak_beginners
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , hedgehog
+    , hlint
+    , hspec
+  default-language: Haskell2010
+
+executable tak-beginners-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_tak_beginners
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , hedgehog
+    , hlint
+    , hspec
+    , tak-beginners
+  default-language: Haskell2010
+
+test-suite tak-beginners-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Spec.Homework.W02
+      Spec.Homework.W03
+      Paths_tak_beginners
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , hedgehog
+    , hlint
+    , hspec
+    , tak-beginners
+  default-language: Haskell2010
