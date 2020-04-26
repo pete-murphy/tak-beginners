@@ -47,12 +47,12 @@ specs = do
       (getPos (4, 'a') =<< placePiece White (Placement FlatStone (4, 'a')) =<< emptyBoard 5)
       `shouldBe` Just (Flat White Top)
 
-    it "placing piece A at invalid position P on empty board and then getting at P should return a stack with A" $
+    it "placing piece A at invalid position P on empty board and then getting at P should return Nothing" $
       (getPos (9, 'a') =<< placePiece White (Placement FlatStone (9, 'a')) =<< emptyBoard 5)
       `shouldBe` Nothing
 
     -- Should probably be a property test
-    it "updating position P on empty board with stack S, and then getting at P should return Nothing" $
+    it "updating position P on empty board with stack S, and then getting at P should return a stack with A" $
       (getPos (4, 'a') =<< updatePos (4, 'a') (Flat White Top) =<< emptyBoard 5)
       `shouldBe` Just (Flat White Top)
 
