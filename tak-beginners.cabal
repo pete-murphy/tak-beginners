@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bbf75de78d7e60fc586f2a3bbd0a0adc0e4fe21d7c5f2559af03f6a77f3c8e07
+-- hash: db39ba6910197822db9ce2ffde1342ca3c3d66e274776eb18b27bf5ce786b5fc
 
 name:           tak-beginners
 version:        0.1.0.0
@@ -30,6 +30,7 @@ library
       Homework.W02
       Homework.W03
       Homework.W03Other
+      Homework.W04
       Lib
   other-modules:
       Paths_tak_beginners
@@ -38,7 +39,6 @@ library
   build-depends:
       base >=4.7 && <5
     , hedgehog
-    , hlint
     , hspec
   default-language: Haskell2010
 
@@ -52,7 +52,6 @@ executable tak-beginners-exe
   build-depends:
       base >=4.7 && <5
     , hedgehog
-    , hlint
     , hspec
     , tak-beginners
   default-language: Haskell2010
@@ -70,7 +69,6 @@ test-suite tak-beginners-test
   build-depends:
       base >=4.7 && <5
     , hedgehog
-    , hlint
     , hspec
     , tak-beginners
   default-language: Haskell2010
