@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: db39ba6910197822db9ce2ffde1342ca3c3d66e274776eb18b27bf5ce786b5fc
+-- hash: efc86bc65a74e24b9865e08b5de002df274788c7ea48132b77d03d9fc23140d8
 
 name:           tak-beginners
 version:        0.1.0.0
@@ -31,6 +31,7 @@ library
       Homework.W03
       Homework.W03Other
       Homework.W04
+      Homework.W05
       Lib
   other-modules:
       Paths_tak_beginners
@@ -62,6 +63,7 @@ test-suite tak-beginners-test
   other-modules:
       Spec.Homework.W02
       Spec.Homework.W03
+      Spec.Homework.W04
       Paths_tak_beginners
   hs-source-dirs:
       test
