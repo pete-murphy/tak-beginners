@@ -1,3 +1,6 @@
 # resolver: ghc-8.6.5
 # resolver: lts-14.27
 resolver: lts-15.10
+
+extra-deps:
+  - hedgehog-classes-0.2.4.1@sha256:e9d49ea57671243a9adb3c3a298349fef29187d8be8243cf4606f0e7b519423b,5635

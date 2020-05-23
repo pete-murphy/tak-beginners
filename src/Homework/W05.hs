@@ -47,9 +47,7 @@ filter' :: Foldable t => (a -> Bool) -> t a -> [a]
 filter' pred = foldMap (guard <$> pred <*> (: []))
 
 guard :: Monoid m => Bool -> m -> m
-guard b m
-  | b = m
-  | otherwise = mempty
+guard b m = if b then m else mempty
 
 -- >>> count (> 3) [1..20]
 -- 17
