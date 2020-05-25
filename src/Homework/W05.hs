@@ -85,7 +85,7 @@ toList = foldMap (: [])
 -- | Let's instantiate 'Foldable' for a few conventional types.  If you know what a "pre-order
 -- traversal" is, do that one.  If not, anything is fine.
 data Tree a = Leaf | Branch a (Tree a) (Tree a)
-  deriving (Show)
+  deriving (Eq, Show)
 
 instance Foldable Tree where
   foldMap :: Monoid m => (a -> m) -> Tree a -> m

@@ -1,6 +1,11 @@
+{-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module Homework.W06 where
 
 import Control.Applicative
+import Data.Semigroup (All (..), Any (..))
+import Homework.W05 (Power (..), Tree (..))
 
 data Option a = None | Some a
   deriving (Eq, Show)
@@ -31,17 +36,33 @@ instance Functor List where
   fmap f (Cons x xs) = Cons (f x) (fmap f xs)
 
 instance Applicative List where
-  pure = flip Cons Nil
-  liftA2 _ Nil _ = Nil
-  liftA2 _ _ Nil = Nil
+  -- pure x = Cons x (pure x)
+  -- liftA2 f _ Nil = Nil
+  -- liftA2 f Nil _ = Nil
+  -- liftA2 f (Cons x xs) (Cons y ys) = f x y `Cons` liftA2 f xs ys
+  pure x = Cons x Nil
+  liftA2 f _ Nil = Nil
+  liftA2 f Nil _ = Nil
   liftA2 f (Cons x xs) ys = (f x <$> ys) <> liftA2 f xs ys
 
 instance Monad List where
   Nil >>= _ = Nil
   Cons x xs >>= f = f x <> (xs >>= f)
 
-data Tree a = Leaf | Branch a (Tree a) (Tree a)
-  deriving (Eq, Show)
+-- Applicative: Identity
+--   pure id <*> v === v
+-- Applicative: Composition
+--   pure (.) <*> u <*> v <*> w === u <*> (v <*> w)
+-- Applicative: Homomorphism
+--   pure f <*> pure x === pure (f x)
+-- Applicative: Interchange
+--   u <*> pure y === pure ($ y) <*> u
+
+-- Applicative: LiftA2 Part 1
+-- Applicative: LiftA2 Part 2
+
+-- data Tree a = Leaf | Branch a (Tree a) (Tree a)
+--   deriving (Eq, Show)
 
 instance Functor Tree where
   fmap _ Leaf = Leaf
@@ -53,8 +74,8 @@ data Pair a b = Pair a b
 instance Functor (Pair a) where
   fmap f (Pair x y) = Pair x (f y)
 
-data Power a = Power Int a
-  deriving (Eq, Show)
+-- data Power a = Power Int a
+--   deriving (Eq, Show)
 
 instance Functor Power where
   fmap f (Power n x) = Power n (f x)
@@ -108,7 +129,15 @@ stupid k = (even <$> length) <$$> lookup k
   where
     (<$$>) = (<$>) <$> (<$>)
 
-newtype Compose f g a = Compose (f (g a))
+-- stupid :: forall k t a. (Eq k, Foldable t) => k -> [(k, t a)] -> Maybe Bool
+-- stupid key xs = fmap getAny $ foldMap go $ fmap (fmap (Any . even . length)) xs
+--   where
+--     go :: (k, Any) -> Maybe Any
+--     go (k, isEven) = if k == key then Just isEven else Nothing
 
-instance (Functor f, Functor g) => Functor (Compose f g) where
-  fmap f (Compose x) = Compose ((fmap . fmap) f x)
+foo :: forall k a. (Eq k) => k -> [(k, a)] -> Maybe a
+foo key = foldr go Nothing
+  where
+    go :: (k, a) -> Maybe a -> Maybe a
+    go (k, a) Nothing = if key == k then Just a else Nothing
+    go _ x = x

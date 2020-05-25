@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 65f0e5fbaeda3b346ac6ce61ae81a2d158e44ccde81751aaa7e036a25843ff2a
+-- hash: c06d349adda44983bb03cc189e2a37113ae16162198860391828caf359ca3f4d
 
 name:           tak-beginners
 version:        0.1.0.0
@@ -27,23 +27,30 @@ source-repository head
 
 library
   exposed-modules:
+      Game
+      Homework.Pipes.Consumer
+      Homework.Pipes.Pipes
+      Homework.Pipes.Producer
       Homework.W02
       Homework.W03
       Homework.W04
       Homework.W05
       Homework.W06
       Homework.W06Notes
-      Lib
   other-modules:
       Paths_tak_beginners
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
+    , containers
+    , gloss
     , hedgehog
     , hedgehog-classes
     , hedgehog-fn
     , hspec
+    , pipes
+    , transformers
   default-language: Haskell2010
 
 executable tak-beginners-exe
@@ -55,11 +62,15 @@ executable tak-beginners-exe
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , containers
+    , gloss
     , hedgehog
     , hedgehog-classes
     , hedgehog-fn
     , hspec
+    , pipes
     , tak-beginners
+    , transformers
   default-language: Haskell2010
 
 test-suite tak-beginners-test
@@ -70,15 +81,20 @@ test-suite tak-beginners-test
       Spec.Homework.W03
       Spec.Homework.W04
       Spec.Homework.W05
+      Spec.Homework.W06
       Paths_tak_beginners
   hs-source-dirs:
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , containers
+    , gloss
     , hedgehog
     , hedgehog-classes
     , hedgehog-fn
     , hspec
+    , pipes
     , tak-beginners
+    , transformers
   default-language: Haskell2010
