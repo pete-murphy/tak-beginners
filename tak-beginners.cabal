@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 150188be8a6483054c6fc3188677e73485413d768bd53fa2dfbc5c098271875b
+-- hash: 41f4b1f428ebb0f53334403bb1fe917323ffe33ef2420d01e1274b52254d75d4
 
 name:           tak-beginners
 version:        0.1.0.0
@@ -28,10 +28,12 @@ source-repository head
 library
   exposed-modules:
       Game
-      Homework.Cont
+      Homework.Existential
+      Homework.Freer.Slide1
       Homework.Pipes.Consumer
       Homework.Pipes.Pipes
       Homework.Pipes.Producer
+      Homework.Tape
       Homework.W02
       Homework.W03
       Homework.W04
@@ -39,18 +41,25 @@ library
       Homework.W06
       Homework.W06Notes
       Homework.W07
+      Lib
   other-modules:
       Paths_tak_beginners
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      adjunctions
+    , base >=4.7 && <5
+    , comonad
     , containers
+    , distributive
+    , doctest
+    , free
     , gloss
     , hedgehog
     , hedgehog-classes
     , hedgehog-fn
     , hspec
+    , lens
     , pipes
     , transformers
   default-language: Haskell2010
@@ -63,13 +72,19 @@ executable tak-beginners-exe
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      adjunctions
+    , base >=4.7 && <5
+    , comonad
     , containers
+    , distributive
+    , doctest
+    , free
     , gloss
     , hedgehog
     , hedgehog-classes
     , hedgehog-fn
     , hspec
+    , lens
     , pipes
     , tak-beginners
     , transformers
@@ -90,13 +105,19 @@ test-suite tak-beginners-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      adjunctions
+    , base >=4.7 && <5
+    , comonad
     , containers
+    , distributive
+    , doctest
+    , free
     , gloss
     , hedgehog
     , hedgehog-classes
     , hedgehog-fn
     , hspec
+    , lens
     , pipes
     , tak-beginners
     , transformers

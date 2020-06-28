@@ -21,12 +21,18 @@ description: Please see the README on GitHub at <https://github.com/githubuser/t
 
 dependencies:
   - base >= 4.7 && < 5
+  - adjunctions
+  - comonad
   - containers
+  - doctest
+  - distributive
+  - free
   - gloss
   - hspec
   - hedgehog
   - hedgehog-classes
   - hedgehog-fn
+  - lens
   - pipes
   - transformers
 
