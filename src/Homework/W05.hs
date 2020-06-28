@@ -3,6 +3,7 @@
 
 module Homework.W05 where
 
+import Lib
 import Data.Semigroup -- Feel free to use any of the newtype wrappers from Data.Semigroup if you
   -- like.  They're the ones we implemented for homework last week.
 
@@ -45,9 +46,6 @@ find pred = mapMaybe getFirst . foldMap (guard <$> pred <*> Just . First)
 
 filter' :: Foldable t => (a -> Bool) -> t a -> [a]
 filter' pred = foldMap (guard <$> pred <*> (: []))
-
-guard :: Monoid m => Bool -> m -> m
-guard b m = if b then m else mempty
 
 -- >>> count (> 3) [1..20]
 -- 17

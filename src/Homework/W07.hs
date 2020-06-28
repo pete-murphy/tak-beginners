@@ -7,6 +7,7 @@ import Control.Arrow
 import Data.Char (toLower, toUpper)
 import Data.Functor
 import Data.Semigroup hiding (Option)
+import Lib (guard)
 
 -- | Today we're working with Applicative Functors (or 'Applicative's for not-quite-as-long).  As
 -- I'm sure you recall, the applicative class looks like this:
@@ -95,7 +96,7 @@ commute = foreach id
 -- the number of times someone used 'pure' in our computation.  A value of type @Count a@ is just
 -- like an @a@, but it carries a running total of whatever we're counting with it.
 newtype Count a = Count {runCount :: (Int, a)}
-  deriving (Show)
+  deriving (Show, Eq)
 
 -- | Instantiate 'Functor' for 'Count'.
 instance Functor Count where
@@ -250,10 +251,7 @@ foreach_ f = foldr ((*>) . f) (pure ())
 -- 3
 
 count :: (a -> Bool) -> [a] -> Int
-count p = getSum . fst . runLog . foreach \x -> tell (guard (p x) 1)
-
-guard :: Monoid m => Bool -> m -> m
-guard b m = if b then m else mempty
+count p = getSum . fst . runLog . foreach_ \x -> tell (guard (p x) 1)
 
 -- | Last chunk of problems, which I think we'll discuss in a bit more depth.  I'm going to give you
 -- a new type for which to instantiate 'Applicative', and a couple functions (like 'ask' and 'tell')
@@ -289,7 +287,8 @@ modify f = Clog \s -> (f s, ())
 
 -- | There's usually a put, here's an implementation for you.
 put :: s -> Clog s ()
-put = modify . const
+-- put = modify . const
+put x = Clog \_ -> (x, ())
 
 -- | If your instance, and 'get' and 'modify' work, this should be an implementation of factorial.
 weirderFactorial :: Int -> Int
@@ -297,6 +296,3 @@ weirderFactorial x = fst $ runClog (go x) 1
   where
     go 0 = get
     go n = modify (* n) *> go (n - 1)
-
--- $> weirderFactorial 5
--- 120
