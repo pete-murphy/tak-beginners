@@ -26,7 +26,7 @@ main :: IO ()
 main = do
   hspec spec
   defaultMain
-    [checkParallel $$(discover)]
+    [checkParallel $$(discover), lawsCheckMany lawsTests]
 
 spec :: Spec
 spec = do
@@ -74,3 +74,34 @@ prop_weirderFactorial =
   property do
     n <- forAll do Gen.int (Range.linear 0 1000)
     weirderFactorial n === product [1 .. n]
+
+genCount :: Gen a -> Gen (Count a)
+genCount g = do
+  n <- Gen.int Range.linearBounded
+  a <- g
+  pure (Count (n, a))
+
+-- These fail on Composition & Homomorphism laws for Applicative
+--  Composition Law:
+--    pure (.) <*> u <*> v <*> w == u <*> (v <*> w)
+--    when u = Count {runCount = (0, id)}
+--         v = Count {runCount = (0, id)}
+--         w = 0
+--    pure (.) <*> u <*> v <*> w = Count {runCount = (1, 0)}
+--  but:
+--    u <*> (v <*> w)            = Count {runCount = (0, 0)}
+--
+--  Homomorphism Law:
+--    pure f <*> pure x == pure (f x)
+--    when f = id
+--         x = 0
+--    pure f <*> pure x = Count {runCount = (2, 0)}
+--  but:
+--    pure (f x) =        Count {runCount = (1, 0)}
+
+lawsTests :: [(String, [Laws])]
+lawsTests =
+  [ ( "Count",
+      [functorLaws genCount, applicativeLaws genCount]
+    )
+  ]
